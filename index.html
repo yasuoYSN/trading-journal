@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Journey — Month 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FDFAF5;
+    --dark: #1A1714;
+    --dark2: #2C2825;
+    --dark3: #3D3A36;
+    --gold: #C9A84C;
+    --gold-light: #E8D49A;
+    --gold-pale: #F5EDD0;
+    --rust: #B85C38;
+    --rust-pale: #F2E4DC;
+    --sage: #7A9E7E;
+    --sage-pale: #DFF0E1;
+    --muted: #8A857D;
+    --border: #E0D8CE;
+    --border-dark: #C8BFB3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* HERO HEADER */
+  .hero {
+    background: var(--dark);
+    padding: 56px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 180px; height: 180px;
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 50%;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--warm-white);
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(245,240,232,0.55);
+    margin-top: 12px;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 36px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat { }
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: rgba(245,240,232,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+  .stat-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.08);
+    align-self: stretch;
+  }
+
+  /* MAIN LAYOUT */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  /* OVERVIEW SECTION */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .week-pill {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 16px;
+    position: relative;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .week-pill:hover { border-color: var(--gold); transform: translateY(-1px); }
+  .week-pill.active { border-color: var(--gold); background: var(--gold-pale); }
+  .week-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .week-title-sm {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .status-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--border-dark);
+    flex-shrink: 0;
+  }
+  .dot.done { background: var(--sage); }
+  .dot.active { background: var(--gold); }
+
+  /* RULES BANNER */
+  .rules-banner {
+    background: var(--dark2);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .rules-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .rules-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+  }
+  .rules-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rules-list li {
+    font-size: 12.5px;
+    color: rgba(245,240,232,0.6);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .rules-list li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* WEEK SECTIONS */
+  .week-section {
+    margin-bottom: 52px;
+  }
+  .week-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .week-number-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--border-dark);
+    flex-shrink: 0;
+    margin-top: -6px;
+  }
+  .week-header-text { flex: 1; }
+  .week-theme {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+  .week-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .week-accent {
+    width: 3px;
+    border-radius: 2px;
+    align-self: stretch;
+    flex-shrink: 0;
+    min-height: 60px;
+  }
+  .w1 .week-accent { background: var(--gold); }
+  .w2 .week-accent { background: var(--rust); }
+  .w3 .week-accent { background: #C9A84C; }
+  .w4 .week-accent { background: var(--sage); }
+
+  /* CONTENT CARDS */
+  .cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .checklist li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+  .check-box {
+    width: 15px; height: 15px;
+    border: 1.5px solid var(--border-dark);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .check-box:hover { border-color: var(--gold); }
+  .check-box.checked { background: var(--gold); border-color: var(--gold); }
+  .check-box.checked::after { content: '✓'; font-size: 9px; color: white; font-weight: 700; }
+
+  /* GOALS ROW */
+  .goals-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .goals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .goal-item {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+  }
+  .goal-check {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border-dark);
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    margin-bottom: 8px;
+  }
+  .goal-check:hover { border-color: var(--gold); }
+  .goal-check.checked { background: var(--gold); border-color: var(--gold); }
+  .goal-check.checked::after { content: '✓'; font-size: 10px; color: white; font-weight: 700; }
+  .goal-text { font-size: 12.5px; color: var(--dark); line-height: 1.5; }
+
+  /* WARNING BANNER */
+  .warning-card {
+    background: #2C1A10;
+    border: 1px solid rgba(184,92,56,0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .warning-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .warning-text { font-size: 12.5px; color: rgba(245,240,232,0.75); line-height: 1.6; }
+  .warning-text strong { color: #E8A080; font-weight: 500; }
+
+  /* DAILY LOG */
+  .log-section { margin-bottom: 14px; }
+  .log-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  .day-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .day-card:hover { border-color: var(--gold); }
+  .day-card.filled { border-color: var(--sage); background: var(--sage-pale); }
+  .day-num-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 5px;
+  }
+  .day-date-input {
+    font-size: 11px;
+    color: var(--dark);
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    padding: 0;
+    cursor: pointer;
+  }
+  .day-date-input::placeholder { color: var(--border-dark); font-size: 10px; }
+  .day-hours {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .hours-input {
+    width: 28px;
+    font-size: 13px;
+    font-family: 'Playfair Display', serif;
+    color: var(--dark);
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    font-weight: 600;
+  }
+  .hours-label { font-size: 9px; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .day-rating {
+    margin-top: 6px;
+    display: flex;
+    gap: 2px;
+  }
+  .star {
+    font-size: 10px;
+    cursor: pointer;
+    color: var(--border-dark);
+    transition: color 0.1s;
+    user-select: none;
+  }
+  .star.lit { color: var(--gold); }
+
+  /* TRADE LOG TABLE */
+  .table-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .table-header-row {
+    background: var(--dark);
+    padding: 12px 16px;
+  }
+  .table-header-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { border-bottom: 1px solid var(--border); }
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 14px;
+    text-align: left;
+    background: var(--cream);
+    font-weight: 400;
+  }
+  td {
+    padding: 9px 14px;
+    font-size: 12.5px;
+    border-bottom: 1px solid var(--border);
+    color: var(--dark);
+  }
+  tr:last-child td { border-bottom: none; }
+  td input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 12.5px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    outline: none;
+    padding: 0;
+  }
+  td input::placeholder { color: var(--border-dark); }
+  .td-win { color: var(--sage); font-weight: 500; }
+  .td-loss { color: var(--rust); font-weight: 500; }
+
+  /* NOTES AREA */
+  .notes-area {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+  .notes-area textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--dark);
+    line-height: 1.8;
+    resize: none;
+    outline: none;
+    min-height: 80px;
+  }
+  .notes-area textarea::placeholder { color: var(--border-dark); }
+
+  /* STRATEGY SECTION */
+  .strategy-card {
+    background: var(--dark);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 14px;
+  }
+  .strategy-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--warm-white);
+    margin-bottom: 6px;
+  }
+  .strategy-subtitle {
+    font-size: 12px;
+    color: rgba(245,240,232,0.4);
+    margin-bottom: 24px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+  }
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .strategy-field { }
+  .strategy-field label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.4);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .strategy-field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--warm-white);
+    resize: none;
+    outline: none;
+    min-height: 52px;
+    line-height: 1.6;
+  }
+  .strategy-field textarea::placeholder { color: rgba(245,240,232,0.2); }
+  .strategy-field textarea:focus { border-color: rgba(201,168,76,0.4); }
+
+  /* REFLECTION */
+  .reflection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  /* RESOURCES */
+  .resources-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 48px;
+  }
+  .resource-chip {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .resource-chip:hover { border-color: var(--gold); }
+  .resource-icon { font-size: 18px; margin-bottom: 7px; }
+  .resource-name { font-size: 12px; font-weight: 500; color: var(--dark); display: block; margin-bottom: 2px; }
+  .resource-desc { font-size: 11px; color: var(--muted); }
+
+  /* PROGRESS BAR */
+  .progress-section {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .progress-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .progress-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--gold);
+  }
+  .progress-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .progress-labels span {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 40px 0;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .hero { background: var(--dark) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">📈 Trading Journal · Month 1</div>
+  <h1>The <em>Foundation</em><br>Study Plan</h1>
+  <div class="hero-sub">Build before you trade. Learn before you earn.</div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-val">28</div>
+      <div class="stat-label">Days</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-val">3–5h</div>
+      <div class="stat-label">Daily</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-val">EUR/USD</div>
+      <div class="stat-label">Focus Pair</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-val">0</div>
+      <div class="stat-label">Live Trades</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- PROGRESS -->
+  <div class="progress-section" style="margin-bottom:32px;">
+    <div class="progress-header">
+      <span class="progress-title">Monthly progress</span>
+      <span class="progress-pct" id="pct-label">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-labels">
+      <span>Day 1</span>
+      <span>Week 1</span>
+      <span>Week 2</span>
+      <span>Week 3</span>
+      <span>Day 28</span>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section-label">4-week overview</div>
+  <div class="overview-grid">
+    <div class="week-pill active">
+      <div class="week-num">WEEK 01</div>
+      <div class="week-title-sm">How markets work</div>
+      <div class="status-dot"><span class="dot active"></span> In Progress</div>
+    </div>
+    <div class="week-pill">
+      <div class="week-num">WEEK 02</div>
+      <div class="week-title-sm">Market structure & key levels</div>
+      <div class="status-dot"><span class="dot"></span> Not started</div>
+    </div>
+    <div class="week-pill">
+      <div class="week-num">WEEK 03</div>
+      <div class="week-title-sm">Risk management</div>
+      <div class="status-dot"><span class="dot"></span> Not started</div>
+    </div>
+    <div class="week-pill">
+      <div class="week-num">WEEK 04</div>
+      <div class="week-title-sm">Build your strategy</div>
+      <div class="status-dot"><span class="dot"></span> Not started</div>
+    </div>
+  </div>
+
+  <!-- GOLDEN RULES -->
+  <div class="rules-banner">
+    <div class="rules-icon">📌</div>
+    <div>
+      <div class="rules-title">Rules to never break</div>
+      <ul class="rules-list">
+        <li>Never risk more than 2% of account on a single trade</li>
+        <li>Always define your stop loss BEFORE entering any trade</li>
+        <li>No trade without a clear, rule-based reason — no FOMO, no guessing</li>
+        <li>Journal every single session without exception — this is where growth lives</li>
+        <li>Paper trade only for the entire duration of Month 1</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ WEEK 1 ══════════════════════════════════ -->
+  <div class="week-section w1">
+    <div class="week-header">
+      <div class="week-accent"></div>
+      <div class="week-number-big">01</div>
+      <div class="week-header-text">
+        <div class="week-theme">How Markets Actually Work</div>
+        <div class="week-desc">Understand price action, candlesticks, and how buyers & sellers drive movement. No trading — just observing.</div>
+      </div>
+    </div>
+
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-title">📚 What to study</div>
+        <ul class="checklist">
+          <li><span class="check-box" onclick="toggle(this)"></span>What is price action? Buyers vs sellers, bid/ask spread</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>How candlesticks form and what they represent</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Difference between trending and ranging markets</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Babypips — School of Pipsology, chapters 1–3</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">🛠 Daily tasks</div>
+        <ul class="checklist">
+          <li><span class="check-box" onclick="toggle(this)"></span>Set up free TradingView account</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Load EUR/USD chart and just watch daily</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Spend 1–2 hrs observing — zero trades</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Write at least one observation in your journal</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="goals-card">
+      <div class="card-title">🎯 Weekly goals</div>
+      <div class="goals-grid">
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Understand what each part of a candlestick represents</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Identify a trending vs ranging market on a live chart</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">TradingView account set up with EUR/USD loaded</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daily Log W1 -->
+    <div class="section-label" style="margin-top:20px;">Daily log — week 1</div>
+    <div class="log-grid">
+      <div class="day-card" id="d1">
+        <div class="day-num-label">DAY 01</div>
+        <input class="day-date-input" type="text" placeholder="dd/mm">
+        <div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div>
+        <div class="day-rating">
+          <span class="star" onclick="rate(this,1,'d1')">★</span><span class="star" onclick="rate(this,2,'d1')">★</span><span class="star" onclick="rate(this,3,'d1')">★</span><span class="star" onclick="rate(this,4,'d1')">★</span><span class="star" onclick="rate(this,5,'d1')">★</span>
+        </div>
+      </div>
+      <div class="day-card" id="d2">
+        <div class="day-num-label">DAY 02</div>
+        <input class="day-date-input" type="text" placeholder="dd/mm">
+        <div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div>
+        <div class="day-rating">
+          <span class="star" onclick="rate(this,1,'d2')">★</span><span class="star" onclick="rate(this,2,'d2')">★</span><span class="star" onclick="rate(this,3,'d2')">★</span><span class="star" onclick="rate(this,4,'d2')">★</span><span class="star" onclick="rate(this,5,'d2')">★</span>
+        </div>
+      </div>
+      <div class="day-card" id="d3">
+        <div class="day-num-label">DAY 03</div>
+        <input class="day-date-input" type="text" placeholder="dd/mm">
+        <div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div>
+        <div class="day-rating">
+          <span class="star" onclick="rate(this,1,'d3')">★</span><span class="star" onclick="rate(this,2,'d3')">★</span><span class="star" onclick="rate(this,3,'d3')">★</span><span class="star" onclick="rate(this,4,'d3')">★</span><span class="star" onclick="rate(this,5,'d3')">★</span>
+        </div>
+      </div>
+      <div class="day-card" id="d4">
+        <div class="day-num-label">DAY 04</div>
+        <input class="day-date-input" type="text" placeholder="dd/mm">
+        <div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div>
+        <div class="day-rating">
+          <span class="star" onclick="rate(this,1,'d4')">★</span><span class="star" onclick="rate(this,2,'d4')">★</span><span class="star" onclick="rate(this,3,'d4')">★</span><span class="star" onclick="rate(this,4,'d4')">★</span><span class="star" onclick="rate(this,5,'d4')">★</span>
+        </div>
+      </div>
+      <div class="day-card" id="d5">
+        <div class="day-num-label">DAY 05</div>
+        <input class="day-date-input" type="text" placeholder="dd/mm">
+        <div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div>
+        <div class="day-rating">
+          <span class="star" onclick="rate(this,1,'d5')">★</span><span class="star" onclick="rate(this,2,'d5')">★</span><span class="star" onclick="rate(this,3,'d5')">★</span><span class="star" onclick="rate(this,4,'d5')">★</span><span class="star" onclick="rate(this,5,'d5')">★</span>
+        </div>
+      </div>
+      <div class="day-card" id="d6">
+        <div class="day-num-label">DAY 06</div>
+        <input class="day-date-input" type="text" placeholder="dd/mm">
+        <div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div>
+        <div class="day-rating">
+          <span class="star" onclick="rate(this,1,'d6')">★</span><span class="star" onclick="rate(this,2,'d6')">★</span><span class="star" onclick="rate(this,3,'d6')">★</span><span class="star" onclick="rate(this,4,'d6')">★</span><span class="star" onclick="rate(this,5,'d6')">★</span>
+        </div>
+      </div>
+      <div class="day-card" id="d7" style="border-color:#C9A84C; background: var(--gold-pale);">
+        <div class="day-num-label" style="color:var(--gold);">REVIEW</div>
+        <input class="day-date-input" type="text" placeholder="dd/mm">
+        <div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div>
+        <div class="day-rating">
+          <span class="star" onclick="rate(this,1,'d7')">★</span><span class="star" onclick="rate(this,2,'d7')">★</span><span class="star" onclick="rate(this,3,'d7')">★</span><span class="star" onclick="rate(this,4,'d7')">★</span><span class="star" onclick="rate(this,5,'d7')">★</span>
+        </div>
+      </div>
+    </div>
+    <div class="notes-area" style="margin-top:10px;">
+      <div class="card-title">Week 1 — key notes & observations</div>
+      <textarea placeholder="What patterns did you notice? What surprised you? What questions came up during this week?&#10;&#10;Write freely here — this is your space to think..."></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════ WEEK 2 ══════════════════════════════════ -->
+  <div class="week-section w2">
+    <div class="week-header">
+      <div class="week-accent"></div>
+      <div class="week-number-big">02</div>
+      <div class="week-header-text">
+        <div class="week-theme">Market Structure & Key Levels</div>
+        <div class="week-desc">Learn to identify where price has been and where it's likely to react. Support, resistance, and trend structure.</div>
+      </div>
+    </div>
+
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-title">📚 What to study</div>
+        <ul class="checklist">
+          <li><span class="check-box" onclick="toggle(this)"></span>Higher highs / higher lows — bullish structure</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Lower highs / lower lows — bearish structure</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>How to draw support & resistance correctly</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Multiple timeframe analysis (1D → 4H → 1H)</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>YouTube: "market structure for beginners" (2–3 videos)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">🛠 Daily tasks</div>
+        <ul class="checklist">
+          <li><span class="check-box" onclick="toggle(this)"></span>Mark S&R levels on EUR/USD each morning</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Identify trend direction on 3 timeframes</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Screenshot + annotate at least one chart daily</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Note if price respected any of your levels</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="goals-card">
+      <div class="card-title">🎯 Weekly goals</div>
+      <div class="goals-grid">
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Draw S&R on a live chart confidently without second-guessing</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Identify bullish vs bearish market structure on any chart</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Have 5+ journal entries with annotated screenshots</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:20px;">Daily log — week 2</div>
+    <div class="log-grid">
+      <div class="day-card" id="d8"><div class="day-num-label">DAY 08</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d8')">★</span><span class="star" onclick="rate(this,2,'d8')">★</span><span class="star" onclick="rate(this,3,'d8')">★</span><span class="star" onclick="rate(this,4,'d8')">★</span><span class="star" onclick="rate(this,5,'d8')">★</span></div></div>
+      <div class="day-card" id="d9"><div class="day-num-label">DAY 09</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d9')">★</span><span class="star" onclick="rate(this,2,'d9')">★</span><span class="star" onclick="rate(this,3,'d9')">★</span><span class="star" onclick="rate(this,4,'d9')">★</span><span class="star" onclick="rate(this,5,'d9')">★</span></div></div>
+      <div class="day-card" id="d10"><div class="day-num-label">DAY 10</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d10')">★</span><span class="star" onclick="rate(this,2,'d10')">★</span><span class="star" onclick="rate(this,3,'d10')">★</span><span class="star" onclick="rate(this,4,'d10')">★</span><span class="star" onclick="rate(this,5,'d10')">★</span></div></div>
+      <div class="day-card" id="d11"><div class="day-num-label">DAY 11</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d11')">★</span><span class="star" onclick="rate(this,2,'d11')">★</span><span class="star" onclick="rate(this,3,'d11')">★</span><span class="star" onclick="rate(this,4,'d11')">★</span><span class="star" onclick="rate(this,5,'d11')">★</span></div></div>
+      <div class="day-card" id="d12"><div class="day-num-label">DAY 12</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d12')">★</span><span class="star" onclick="rate(this,2,'d12')">★</span><span class="star" onclick="rate(this,3,'d12')">★</span><span class="star" onclick="rate(this,4,'d12')">★</span><span class="star" onclick="rate(this,5,'d12')">★</span></div></div>
+      <div class="day-card" id="d13"><div class="day-num-label">DAY 13</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d13')">★</span><span class="star" onclick="rate(this,2,'d13')">★</span><span class="star" onclick="rate(this,3,'d13')">★</span><span class="star" onclick="rate(this,4,'d13')">★</span><span class="star" onclick="rate(this,5,'d13')">★</span></div></div>
+      <div class="day-card" id="d14" style="border-color:#C9A84C; background: var(--gold-pale);"><div class="day-num-label" style="color:var(--gold);">REVIEW</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d14')">★</span><span class="star" onclick="rate(this,2,'d14')">★</span><span class="star" onclick="rate(this,3,'d14')">★</span><span class="star" onclick="rate(this,4,'d14')">★</span><span class="star" onclick="rate(this,5,'d14')">★</span></div></div>
+    </div>
+    <div class="notes-area" style="margin-top:10px;">
+      <div class="card-title">Week 2 — key notes & observations</div>
+      <textarea placeholder="Did price respect your S&R levels? What market structure did you identify? What still feels unclear?&#10;&#10;Be specific — vague notes won't help you later..."></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════ WEEK 3 ══════════════════════════════════ -->
+  <div class="week-section w3">
+    <div class="week-header">
+      <div class="week-accent"></div>
+      <div class="week-number-big">03</div>
+      <div class="week-header-text">
+        <div class="week-theme">Risk Management</div>
+        <div class="week-desc">The most important week of the month. This is what separates traders who survive from those who blow accounts.</div>
+      </div>
+    </div>
+
+    <div class="warning-card">
+      <div class="warning-icon">⚠️</div>
+      <div class="warning-text"><strong>Do not skip or rush this week.</strong> More traders fail from poor risk management than from bad analysis. If you only master one thing this month, make it this. Every concept here applies for the rest of your trading career.</div>
+    </div>
+
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-title">📚 What to study</div>
+        <ul class="checklist">
+          <li><span class="check-box" onclick="toggle(this)"></span>Risk/reward ratio — what 1:2 and 1:3 means</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Position sizing — how to calculate lot size</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>The 1–2% rule per trade — non-negotiable</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Stop loss placement — logic, not random</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Practice with a forex position size calculator</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">🛠 Daily tasks</div>
+        <ul class="checklist">
+          <li><span class="check-box" onclick="toggle(this)"></span>Start paper trading on TradingView (2–3 trades/day)</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Calculate position size BEFORE every single trade</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Log every paper trade in the table below</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Review trades at end of day — why did they work/fail?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="goals-card">
+      <div class="card-title">🎯 Weekly goals</div>
+      <div class="goals-grid">
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Calculate correct position size before every paper trade</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Never enter a trade without a pre-defined stop loss</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Achieve minimum 1:2 risk/reward on all planned trades</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trade Log -->
+    <div class="table-card" style="margin-top:14px;">
+      <div class="table-header-row"><div class="table-header-title">📊 Paper Trade Log — Week 3</div></div>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th><th>Pair</th><th>Dir.</th><th>Entry</th><th>Stop Loss</th><th>Target</th><th>R:R</th><th>Result</th><th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="—"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="—"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="—"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="—"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="—"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="—"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="—"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-label" style="margin-top:20px;">Daily log — week 3</div>
+    <div class="log-grid">
+      <div class="day-card" id="d15"><div class="day-num-label">DAY 15</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d15')">★</span><span class="star" onclick="rate(this,2,'d15')">★</span><span class="star" onclick="rate(this,3,'d15')">★</span><span class="star" onclick="rate(this,4,'d15')">★</span><span class="star" onclick="rate(this,5,'d15')">★</span></div></div>
+      <div class="day-card" id="d16"><div class="day-num-label">DAY 16</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d16')">★</span><span class="star" onclick="rate(this,2,'d16')">★</span><span class="star" onclick="rate(this,3,'d16')">★</span><span class="star" onclick="rate(this,4,'d16')">★</span><span class="star" onclick="rate(this,5,'d16')">★</span></div></div>
+      <div class="day-card" id="d17"><div class="day-num-label">DAY 17</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d17')">★</span><span class="star" onclick="rate(this,2,'d17')">★</span><span class="star" onclick="rate(this,3,'d17')">★</span><span class="star" onclick="rate(this,4,'d17')">★</span><span class="star" onclick="rate(this,5,'d17')">★</span></div></div>
+      <div class="day-card" id="d18"><div class="day-num-label">DAY 18</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d18')">★</span><span class="star" onclick="rate(this,2,'d18')">★</span><span class="star" onclick="rate(this,3,'d18')">★</span><span class="star" onclick="rate(this,4,'d18')">★</span><span class="star" onclick="rate(this,5,'d18')">★</span></div></div>
+      <div class="day-card" id="d19"><div class="day-num-label">DAY 19</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d19')">★</span><span class="star" onclick="rate(this,2,'d19')">★</span><span class="star" onclick="rate(this,3,'d19')">★</span><span class="star" onclick="rate(this,4,'d19')">★</span><span class="star" onclick="rate(this,5,'d19')">★</span></div></div>
+      <div class="day-card" id="d20"><div class="day-num-label">DAY 20</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d20')">★</span><span class="star" onclick="rate(this,2,'d20')">★</span><span class="star" onclick="rate(this,3,'d20')">★</span><span class="star" onclick="rate(this,4,'d20')">★</span><span class="star" onclick="rate(this,5,'d20')">★</span></div></div>
+      <div class="day-card" id="d21" style="border-color:#C9A84C; background: var(--gold-pale);"><div class="day-num-label" style="color:var(--gold);">REVIEW</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d21')">★</span><span class="star" onclick="rate(this,2,'d21')">★</span><span class="star" onclick="rate(this,3,'d21')">★</span><span class="star" onclick="rate(this,4,'d21')">★</span><span class="star" onclick="rate(this,5,'d21')">★</span></div></div>
+    </div>
+    <div class="notes-area" style="margin-top:10px;">
+      <div class="card-title">Week 3 — risk management reflections</div>
+      <textarea placeholder="How did position sizing feel? Did you stick to your stop losses? Any trades you broke rules on? What did you learn about your own psychology?"></textarea>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════ WEEK 4 ══════════════════════════════════ -->
+  <div class="week-section w4">
+    <div class="week-header">
+      <div class="week-accent"></div>
+      <div class="week-number-big">04</div>
+      <div class="week-header-text">
+        <div class="week-theme">Build Your First Strategy</div>
+        <div class="week-desc">Combine everything from weeks 1–3 into one repeatable, rule-based setup you can test consistently.</div>
+      </div>
+    </div>
+
+    <div class="cards-row">
+      <div class="card">
+        <div class="card-title">📚 What to study</div>
+        <ul class="checklist">
+          <li><span class="check-box" onclick="toggle(this)"></span>How to combine trend + key level + risk management</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>What makes a strategy "valid" — rules over feelings</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Re-watch week 1–2 videos with fresh eyes</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Review your week 3 trade log for patterns</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">🛠 Daily tasks</div>
+        <ul class="checklist">
+          <li><span class="check-box" onclick="toggle(this)"></span>Only enter trades that match your written rules</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Paper trade 2–3 quality setups per day</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>After each trade: did I follow my rules? Yes/No</li>
+          <li><span class="check-box" onclick="toggle(this)"></span>Full monthly review on Day 28</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="goals-card">
+      <div class="card-title">🎯 Weekly goals</div>
+      <div class="goals-grid">
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Write your strategy rules clearly in plain language (1 page max)</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Complete a full month of consistent journal entries</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-check" onclick="toggleGoal(this)"></div>
+          <div class="goal-text">Review paper trading results and assess honestly</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trade Log W4 -->
+    <div class="table-card" style="margin-top:14px;">
+      <div class="table-header-row"><div class="table-header-title">📊 Paper Trade Log — Week 4</div></div>
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Pair</th><th>Dir.</th><th>Entry</th><th>Stop Loss</th><th>Target</th><th>R:R</th><th>Result</th><th>Followed rules?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="Yes / No"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="Yes / No"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="Yes / No"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="Yes / No"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="Yes / No"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="Yes / No"></td></tr>
+          <tr><td><input type="text" placeholder="dd/mm"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="L/S"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="—"></td><td><input type="text" placeholder="1:2"></td><td><input type="text" placeholder="W/L"></td><td><input type="text" placeholder="Yes / No"></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-label" style="margin-top:20px;">Daily log — week 4</div>
+    <div class="log-grid">
+      <div class="day-card" id="d22"><div class="day-num-label">DAY 22</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d22')">★</span><span class="star" onclick="rate(this,2,'d22')">★</span><span class="star" onclick="rate(this,3,'d22')">★</span><span class="star" onclick="rate(this,4,'d22')">★</span><span class="star" onclick="rate(this,5,'d22')">★</span></div></div>
+      <div class="day-card" id="d23"><div class="day-num-label">DAY 23</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d23')">★</span><span class="star" onclick="rate(this,2,'d23')">★</span><span class="star" onclick="rate(this,3,'d23')">★</span><span class="star" onclick="rate(this,4,'d23')">★</span><span class="star" onclick="rate(this,5,'d23')">★</span></div></div>
+      <div class="day-card" id="d24"><div class="day-num-label">DAY 24</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d24')">★</span><span class="star" onclick="rate(this,2,'d24')">★</span><span class="star" onclick="rate(this,3,'d24')">★</span><span class="star" onclick="rate(this,4,'d24')">★</span><span class="star" onclick="rate(this,5,'d24')">★</span></div></div>
+      <div class="day-card" id="d25"><div class="day-num-label">DAY 25</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d25')">★</span><span class="star" onclick="rate(this,2,'d25')">★</span><span class="star" onclick="rate(this,3,'d25')">★</span><span class="star" onclick="rate(this,4,'d25')">★</span><span class="star" onclick="rate(this,5,'d25')">★</span></div></div>
+      <div class="day-card" id="d26"><div class="day-num-label">DAY 26</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d26')">★</span><span class="star" onclick="rate(this,2,'d26')">★</span><span class="star" onclick="rate(this,3,'d26')">★</span><span class="star" onclick="rate(this,4,'d26')">★</span><span class="star" onclick="rate(this,5,'d26')">★</span></div></div>
+      <div class="day-card" id="d27"><div class="day-num-label">DAY 27</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d27')">★</span><span class="star" onclick="rate(this,2,'d27')">★</span><span class="star" onclick="rate(this,3,'d27')">★</span><span class="star" onclick="rate(this,4,'d27')">★</span><span class="star" onclick="rate(this,5,'d27')">★</span></div></div>
+      <div class="day-card" id="d28" style="border-color:#C9A84C; background: var(--gold-pale);"><div class="day-num-label" style="color:var(--gold);">FINAL</div><input class="day-date-input" type="text" placeholder="dd/mm"><div class="day-hours"><input class="hours-input" type="text" placeholder="—"><span class="hours-label">hrs</span></div><div class="day-rating"><span class="star" onclick="rate(this,1,'d28')">★</span><span class="star" onclick="rate(this,2,'d28')">★</span><span class="star" onclick="rate(this,3,'d28')">★</span><span class="star" onclick="rate(this,4,'d28')">★</span><span class="star" onclick="rate(this,5,'d28')">★</span></div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MY STRATEGY -->
+  <div class="strategy-card">
+    <div class="strategy-title">My Trading Strategy</div>
+    <div class="strategy-subtitle">Write your rules here — clear, simple, no ambiguity</div>
+    <div class="strategy-grid">
+      <div class="strategy-field">
+        <label>Market condition I look for</label>
+        <textarea placeholder="e.g. Uptrend on 4H with higher highs and higher lows..."></textarea>
+      </div>
+      <div class="strategy-field">
+        <label>Timeframes I use</label>
+        <textarea placeholder="e.g. 4H for structure, 1H for entry, 15M for confirmation..."></textarea>
+      </div>
+      <div class="strategy-field">
+        <label>Entry criteria</label>
+        <textarea placeholder="e.g. Price pulls back to key S level, bullish candle close..."></textarea>
+      </div>
+      <div class="strategy-field">
+        <label>Stop loss placement</label>
+        <textarea placeholder="e.g. Below the last swing low with 5 pip buffer..."></textarea>
+      </div>
+      <div class="strategy-field">
+        <label>Take profit / target</label>
+        <textarea placeholder="e.g. Next major resistance level, minimum 1:2 R:R..."></textarea>
+      </div>
+      <div class="strategy-field">
+        <label>Rules I must not break</label>
+        <textarea placeholder="e.g. Max 2 trades/day, no trading 30min before news, max 1.5% risk..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div style="margin-top:14px;">
+    <div class="section-label">Month 1 — final reflection</div>
+    <div class="reflection-grid">
+      <div class="notes-area">
+        <div class="card-title">What I'm most proud of</div>
+        <textarea placeholder="Be honest with yourself..."></textarea>
+      </div>
+      <div class="notes-area">
+        <div class="card-title">What I struggled with</div>
+        <textarea placeholder="Where did discipline break down?"></textarea>
+      </div>
+      <div class="notes-area">
+        <div class="card-title">My biggest lesson this month</div>
+        <textarea placeholder="The one thing that changed how I see trading..."></textarea>
+      </div>
+      <div class="notes-area">
+        <div class="card-title">Am I ready for Month 2?</div>
+        <textarea placeholder="Yes / Not yet — and why..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RESOURCES -->
+  <div class="section-label">Quick resources</div>
+  <div class="resources-row">
+    <a class="resource-chip" href="https://www.tradingview.com" target="_blank">
+      <div class="resource-icon">📊</div>
+      <span class="resource-name">TradingView</span>
+      <span class="resource-desc">Free charting platform</span>
+    </a>
+    <a class="resource-chip" href="https://www.babypips.com/learn/forex" target="_blank">
+      <div class="resource-icon">🎓</div>
+      <span class="resource-name">Babypips</span>
+      <span class="resource-desc">School of Pipsology</span>
+    </a>
+    <a class="resource-chip" href="https://www.myfxbook.com/forex-calculators/position-size" target="_blank">
+      <div class="resource-icon">🧮</div>
+      <span class="resource-name">Position Calc</span>
+      <span class="resource-desc">Lot size calculator</span>
+    </a>
+    <a class="resource-chip" href="https://www.youtube.com/results?search_query=market+structure+for+beginners" target="_blank">
+      <div class="resource-icon">▶️</div>
+      <span class="resource-name">YouTube</span>
+      <span class="resource-desc">Market structure videos</span>
+    </a>
+  </div>
+
+</div>
+
+<script>
+  function toggle(el) {
+    el.classList.toggle('checked');
+    updateProgress();
+  }
+  function toggleGoal(el) {
+    el.classList.toggle('checked');
+    updateProgress();
+  }
+  function rate(star, val, dayId) {
+    const card = document.getElementById(dayId);
+    const stars = card.querySelectorAll('.star');
+    stars.forEach((s, i) => {
+      s.classList.toggle('lit', i < val);
+    });
+    card.classList.add('filled');
+  }
+  function updateProgress() {
+    const all = document.querySelectorAll('.check-box, .goal-check');
+    const done = document.querySelectorAll('.check-box.checked, .goal-check.checked');
+    const pct = Math.round((done.length / all.length) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('pct-label').textContent = pct + '%';
+  }
+  setTimeout(() => {
+    document.getElementById('progress-fill').style.width = '0%';
+  }, 300);
+</script>
+</body>
+</html>
